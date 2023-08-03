@@ -8,30 +8,8 @@ const list = document.getElementById('list');
 let messageListStorage = JSON.parse(localStorage.getItem("items")) || [];
 let messages = [];
 
-if (messageListStorage !== null) {
-    messages = [...messageListStorage];
-    for (let i = 0; i < messageListStorage.length; i++) {
-        var li = document.createElement("li");
-        var message = messageListStorage[i];
-        li.style.display = "block"
-        li.appendChild(document.createTextNode(message));
-        list.appendChild(li);
-    }
-}
-
-function resetArray() {
-    list.innerHTML = "";
-    for (let i = 0; i < messages.length; i++) {
-        var li = document.createElement("li");
-        let message = messages[i];
-        li.style.display = "block"
-        li.appendChild(document.createTextNode(message));
-        list.appendChild(li);
-    }
-}
-
 //FUNCTIONS
-const CreateMessage = () => {
+const createMessage = () => {
     const element = document.createElement('li');
     const elementText = document.createTextNode(messageInput.value);
     element.appendChild(elementText);
@@ -39,38 +17,65 @@ const CreateMessage = () => {
     messages.push(messageInput.value);
     localStorage.setItem('items', JSON.stringify(messages));
     messageInput.value = ""
+    filterMessage()
 };
 
-function filterMessage(){
+function filterMessage() {
     const allMesages = document.getElementsByTagName("li")
-    for (let a = 0; a < messages.length; a++) {
-        if (messages[a].toLowerCase().includes(`${filterInput.value.toLowerCase()}`)) {
-            allMesages[a].style.display = "block"
+    messages.map((items, i) => {
+        if (items.toLowerCase().includes(filterInput.value.toLowerCase())) {
+            allMesages[i].style.display = "block"
         } else {
-            allMesages[a].style.display = "none"
+            allMesages[i].style.display = "none"
         }
-    }
-}
+    })
+};
 
-const DeleteMessage = () => {
+const deleteMessage = () => {
     let newArray = [];
     for (let a = 0; a < messages.length; a++) {
-        if (messages[a].toLowerCase().includes(`${filterInput.value.toLowerCase()}`)) {
-        } else {
+        if (!messages[a].toLowerCase().includes(`${filterInput.value.toLowerCase()}`)) {
             newArray.push(messages[a]);
         }
     }
-    console.log(newArray);
     localStorage.setItem('items', JSON.stringify(newArray));
     messages = newArray;
     resetArray();
     filterMessage();
-}
+};
 
-filterInput.addEventListener('input', () => {
-    filterMessage();
-});
+const addMessage = () => {
+    messages.map((a) => {
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(a));
+        list.appendChild(li);
+    })
+};
 
-deleteButton.addEventListener("click", DeleteMessage);
-addButton.addEventListener('click', CreateMessage);
+const updateMessage = () => {
+    const allMesages = document.getElementsByTagName("li")
+    messages = [];
+    for (let i = 0; i < allMesages.length; i++) {
+        if (allMesages[i].style.display == "block") {
+            allMesages[i].innerText=allMesages[i].innerText.replaceAll(filterInput.value, messageInput.value);
+        }
+        messages.push(allMesages[i].innerText);
+    }
+    localStorage.setItem('items', JSON.stringify(messages));
+};
 
+const resetArray = () => {
+    list.innerHTML = "";
+    addMessage()
+};
+
+if (messageListStorage !== null) {
+    messages = [...messageListStorage];
+    addMessage()
+};
+
+filterInput.addEventListener('input', filterMessage);
+deleteButton.addEventListener("click", deleteMessage);
+addButton.addEventListener('click', createMessage);
+updateButton.addEventListener("click", updateMessage);
+messageInput.addEventListener("keypress", (event)=>{if (event.keyCode === 13 || event.which === 13) {addButton.click() }});
