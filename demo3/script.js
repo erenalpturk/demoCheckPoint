@@ -57,7 +57,7 @@ const updateMessage = () => {
     messages = [];
     for (let i = 0; i < allMesages.length; i++) {
         if (allMesages[i].style.display == "block") {
-            allMesages[i].innerText=allMesages[i].innerText.replaceAll(filterInput.value, messageInput.value);
+            allMesages[i].innerText = allMesages[i].innerText.replaceAll(filterInput.value, messageInput.value);
         }
         messages.push(allMesages[i].innerText);
     }
@@ -78,4 +78,4 @@ filterInput.addEventListener('input', filterMessage);
 deleteButton.addEventListener("click", deleteMessage);
 addButton.addEventListener('click', createMessage);
 updateButton.addEventListener("click", updateMessage);
-messageInput.addEventListener("keypress", (event)=>{if (event.keyCode === 13 || event.which === 13) {addButton.click() }});
+messageInput.addEventListener("keypress", (event) => { if (event.keyCode === 13 || event.which === 13) { addButton.click() } });
