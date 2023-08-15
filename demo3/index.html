@@ -4,27 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Demo3
+    </title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="container">
-        <input id="messageInput" type="text" placeholder="Message">
-
-        <div style="display: flex; gap:10px">
-            <button id="addButton">ADD</button>
-            <button id="deleteButton">DELETE</button>
-            <button id="updateButton">UPDATE</button>
+    <div style="display: flex; gap: px; justify-content: center;">
+        <div id="leftContainer" style="display: flex; flex-direction: column; width: 300px; gap: 20px; align-items: center;">
+            <h3>Team 1</h3>
+            <input id="nameInput1" type="text" placeholder="name">
+            <input id="ageInput1" type="text" placeholder="age">
+            <button id="addButton1">Add</button>
+            <button id="deleteButton1">Delete</button>
+            <button id="updateButton1">Update</button>
+            <input id="filterInput1" type="text" placeholder="filter">
+            <ul id="list1">
+            </ul>
         </div>
-        <input id="filterInput" placeholder="Filter" >
-        <div>
-            <ul id="list">
+        <div id="midContainer">
+            <h2>Same Members</h2>
+            <ul id="sameList"></ul>
+        </div>
+        <div id="rightContainer" style="display: flex; flex-direction: column; width: 300px; gap:20px; align-items: center;">
+            <h3>Team 2</h3>
+            <input id="nameInput2" type="text" placeholder="name">
+            <input id="ageInput2" type="text" placeholder="age">
+            <button id="addButton2">Add</button>
+            <button id="deleteButton2">Delete</button>
+            <button id="updateButton2">Update</button>
+            <input id="filterInput2" type="text" placeholder="filter">
+            <ul id="list2">
             </ul>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
 </body>
 
 </html>
