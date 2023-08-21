@@ -19,7 +19,7 @@ let hobbies = []
 const addFunc = () => {
     for (let i = 0; i < checkbox.length; i++) {
         if (checkbox[i].checked == 1) {
-            hobbies.push((document.getElementById(`checkbox${i}`)).innerHTML)
+            hobbies.push(checkbox[i].id)
         }
     }
 
@@ -49,61 +49,53 @@ const listing = () => {
 listing()
 
 const filterFunc = () => {
-    selectedHobbies = [];
+    const nameFilter = fullname.value.trim();
+    const ageFilter = age.value.trim();
+    const selectedHobbies = [];
+
     for (let i = 0; i < checkbox.length; i++) {
-        if (checkbox[i].checked == 1) {
-            selectedHobbies.push(checkbox[i].id)
+        if (checkbox[i].checked) {
+            selectedHobbies.push(checkbox[i].id);
         }
     }
 
-
-    // console.log(liArr[1].hobbies.includes(hobbies[0]))
-
-
-    // console.log(liArr[2].hobbies.includes(selectedHobbies[0]))
+    list.innerHTML = '';
 
     for (let i = 0; i < liArr.length; i++) {
-        var inHobbies = false
-        for (let a = 0; a < selectedHobbies.length; a++) {
-            if (liArr[i].hobbies.includes(selectedHobbies[a]) != 1) {
-                inHobbies = false;
-                break;
-            } else {
-                inHobbies = true;
+        const user = liArr[i];
+
+        //BOS OLAN INPUTLARI DOGRU KABUL ETTIGIMIZ YER 
+        const nameMatches = !nameFilter || user.name.toLowerCase().includes(nameFilter.toLowerCase());
+        const ageMatches = !ageFilter || user.age === ageFilter;
+        let hobbiesMatch = (selectedHobbies.length === 0)
+
+        
+        if (selectedHobbies.length > 0) {
+            hobbiesMatch = true;
+            for (let j = 0; j < selectedHobbies.length; j++) {
+                if (!user.hobbies.includes(selectedHobbies[j])) {
+                    hobbiesMatch = false;
+                    break;
+                }
             }
         }
-    }
 
-    if (fullname.value != "") {
-        for (let i = 0; i < liArr.length; i++) {
-            var matchName = false;
-            if (liArr[i].name.includes(fullname.value) && liArr[i].age == age.value) {
-                matchName = true;
-            }
+        if (nameMatches && ageMatches && hobbiesMatch) {
+            let newLi = document.createElement('li');
+            newLi.textContent = user.name + ' ' + user.age + ' // ' + user.hobbies;
+            list.appendChild(newLi);
         }
     }
-
-    if (age.value != "") {
-        var matchAge = false;
-        for (let i = 0; i < liArr.length; i++) {
-            if (liArr[i].age == age.value) {
-                matchAge = true;
-            }
-        }
-    }
-
-    if (inHobbies && matchName && matchAge) {
-        console.log("here")
-    }
-}
-
-
-
-
-
+};
 
 const allFunc = () => {
-    console.log("allFunc")
+    list.innerHTML = '';
+        for (let i = 0; i < liArr.length; i++) {
+        let newLi = document.createElement("li")
+        let liText = document.createTextNode(liArr[i].name + " " + liArr[i].age + " // " + liArr[i].hobbies)
+        newLi.appendChild(liText)
+        list.appendChild(newLi)
+    }
 }
 
 
