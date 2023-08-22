@@ -148,7 +148,6 @@ const filterFunction2 = () => {
         }
     }
 }
-
 const deleteFunction2 = () => {
     let newArr = []
     for (let i = 0; i < contacts2.length; i++) {
